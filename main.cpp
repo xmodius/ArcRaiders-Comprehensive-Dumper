@@ -376,7 +376,8 @@ public:
             
             if (VMMDLL_ProcessGetInformation(hVMM, pids[i], &procInfo, &cbProcInfo)) {
                 std::string procName = procInfo.szName;
-                if (procName == "PioneerGame.exe") {
+                // Handle truncated process names (max 15 chars)
+                if (procName == "PioneerGame.exe" || procName == "PioneerGame.ex" || procName.find("PioneerGame") != std::string::npos) {
                     processId = pids[i];
                     found = true;
                     break;
