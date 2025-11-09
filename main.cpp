@@ -27,14 +27,12 @@ private:
     template<typename T>
     T Read(uintptr_t address) {
         T buffer{};
-        DWORD bytesRead = 0;
-        VMMDLL_MemRead(hVMM, processId, address, (PBYTE)&buffer, sizeof(T), &bytesRead, 0);
+        VMMDLL_MemRead(hVMM, processId, address, (PBYTE)&buffer, sizeof(T));
         return buffer;
     }
     
     bool ReadBytes(uintptr_t address, BYTE* buffer, SIZE_T size) {
-        DWORD bytesRead = 0;
-        return VMMDLL_MemRead(hVMM, processId, address, buffer, size, &bytesRead, 0) && bytesRead == size;
+        return VMMDLL_MemRead(hVMM, processId, address, buffer, size) == size;
     }
     
     std::string ToHex(uintptr_t value) {
